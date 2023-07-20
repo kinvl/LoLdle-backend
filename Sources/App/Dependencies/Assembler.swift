@@ -5,14 +5,16 @@
 //  Created by Krzysztof Kinal on 03/09/2022.
 //
 
+import Vapor
 import Swinject
 
-/** Application dependency manager. Any assembly to be registered to a container should go into the static `assembler` property. */
-final class Assembler {
-    @MainActor
-    static let assembler: Swinject.Assembler = {
-        return Swinject.Assembler([
-            DatabaseRepositoryAssembly(),
+class Assembler {
+    private let application: Application
+    
+    lazy var assembler: Swinject.Assembler = {
+        .init([
+            MainAssembly(application: application),
+            RepositoryAssembly(),
             ChallengeControllerAssembly(),
             ChampionChallengeControllerAssembly(),
             DataControllerAssembly(),
@@ -20,4 +22,8 @@ final class Assembler {
             StatisticsControllerAssembly()
         ])
     }()
+    
+    init(application: Application) {
+        self.application = application
+    }
 }

@@ -7,10 +7,10 @@
 
 struct SQLStatement {
     static func rowCount(inTables tables: [String]) -> String {
-        return String(tables
-            .reduce("SELECT") { partialResult, table in
+        return String(
+            tables.reduce("SELECT") { partialResult, table in
                 return partialResult + "(SELECT COUNT(*) FROM \(table)) AS \(table),"
-            }
-            .dropLast())
+            }.dropLast()
+        )
     }
 }

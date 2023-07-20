@@ -16,7 +16,7 @@ final class DataControllerTests: XCTestCase {
                                  Champion(id: 1, name: "Lulu", gender: "male", position: ["top", "bot"], species: ["unknown"], resource: "mana", rangeType: "melee", region: ["shadowIsles", "blessedIsles"], releaseYear: 2000)]
         let app = Application(.testing)
         defer { app.shutdown() }
-        try MainApplication().configure(app)
+        try bootstrap(app)
         try? DatabaseHelper.setupDefaultTestTables(inDatabase: app.db)
         
         // When:
@@ -39,7 +39,7 @@ final class DataControllerTests: XCTestCase {
         // Given:
         let app = Application(.testing)
         defer { app.shutdown() }
-        try MainApplication().configure(app)
+        try bootstrap(app)
         try? DatabaseHelper.setupDefaultTestTables(inDatabase: app.db)
         
         // When:

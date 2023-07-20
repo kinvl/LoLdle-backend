@@ -13,15 +13,22 @@ protocol ChampionsRepository {
     func getAllChampionNames(database: Database) async -> [String]?
 }
 
-extension DatabaseRepository: ChampionsRepository {
+class ChampionsRepositoryImpl: ChampionsRepository {
+    private let storage: Storage
+    
+    init(storage: Storage) {
+        self.storage = storage
+    }
+    
+    // MARK: - ChampionsRepository
     func getAllChampions(database: Database) async -> [Champion]? {
-        return await all(Champion.self, on: database)
+        return await storage.all(Champion.self, on: database)
     }
     
     func getAllChampionNames(database: Database) async -> [String]? {
         let column = FieldKey.name.description
         let table = Champion.schema
         
-        return await self.column(column, table: table, type: String.self, on: database)
+        return await storage.column(column, table: table, type: String.self, on: database)
     }
 }

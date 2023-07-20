@@ -6,12 +6,14 @@
 //
 
 import Swinject
+import Fluent
 
 final class DatasetAssembly: Assembly {
     func assemble(container: Container) {
         container.register(Dataset.self) { resolver in
             let championsRepository = resolver.resolve(ChampionsRepository.self)!
-            return Dataset(championsRepository: championsRepository)
+            let database = resolver.resolve(Database.self)!
+            return Dataset(database: database, championsRepository: championsRepository)
         }.inObjectScope(.container)
     }
 }

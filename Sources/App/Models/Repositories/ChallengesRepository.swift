@@ -12,8 +12,15 @@ protocol ChallengesRepository {
     func getChallenge(type: ChallengeType, database: Database) async -> Challenge?
 }
 
-extension DatabaseRepository: ChallengesRepository {
+class ChallengesRepositoryImpl: ChallengesRepository {
+    private let storage: Storage
+    
+    init(storage: Storage) {
+        self.storage = storage
+    }
+    
+    // MARK: - ChallengesRepository
     func getChallenge(type: ChallengeType, database: Database) async -> Challenge? {
-        return await find(Challenge.self, id: type.id, on: database)
+        return await storage.find(Challenge.self, id: type.id, on: database)
     }
 }

@@ -15,7 +15,7 @@ final class ChallengeControllerTests: XCTestCase {
         let expectedChallenge = Challenge.Public(challengeType: ChallengeType.champion.rawValue, challengeSecret: "Yuumi")
         let app = Application(.testing)
         defer { app.shutdown() }
-        try MainApplication().configure(app)
+        try bootstrap(app)
         try? DatabaseHelper.setupDefaultTestTables(inDatabase: app.db)
         
         // When:
@@ -36,7 +36,7 @@ final class ChallengeControllerTests: XCTestCase {
         let expectedStatistic = Statistic.Public(challengeType: ChallengeType.champion.rawValue, completions: 1) // On POST request, completions should get incremented by 1
         let app = Application(.testing)
         defer { app.shutdown() }
-        try MainApplication().configure(app)
+        try bootstrap(app)
         try? DatabaseHelper.setupDefaultTestTables(inDatabase: app.db)
         
         // When:

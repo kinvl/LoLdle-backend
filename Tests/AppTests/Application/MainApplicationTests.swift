@@ -9,25 +9,13 @@
 import XCTVapor
 
 final class MainApplicationTests: XCTestCase {
-    func testIfAppObjectIsSet() throws {
-        // Given:
-        let app = Application(.testing)
-        defer { app.shutdown() }
-
-        // When:
-        try MainApplication().configure(app)
-        
-        // Then:
-        XCTAssertNotNil(MainApplication.app)
-    }
-    
     func testIfDatabaseIsConfigured() throws {
         // Given:
         let app = Application(.testing)
         defer { app.shutdown() }
 
         // When:
-        try MainApplication().configure(app)
+        try bootstrap(app)
         
         // Then:
         _ = app.db // Accessing unconfigured database results in a fatal error
@@ -40,21 +28,9 @@ final class MainApplicationTests: XCTestCase {
         defer { app.shutdown() }
 
         // When:
-        try MainApplication().configure(app)
+        try bootstrap(app)
         
         // Then:
         XCTAssert(!app.routes.all.isEmpty)
-    }
-    
-    func testIfCronJobsAreScheduled() throws {
-        // Given:
-        let app = Application(.testing)
-        defer { app.shutdown() }
-
-        // When:
-        try MainApplication().configure(app)
-        
-        // Then:
-        XCTAssert(!MainApplication.cronJobs.isEmpty)
     }
 }

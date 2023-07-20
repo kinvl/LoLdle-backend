@@ -12,8 +12,15 @@ protocol DataRepository {
     func rowCount(inTables tables: [String], database: Database) async -> [String: Int]
 }
 
-extension DatabaseRepository: DataRepository {
+class DataRepositoryImpl: DataRepository {
+    private let storage: Storage
+    
+    init(storage: Storage) {
+        self.storage = storage
+    }
+    
+    // MARK: - DataRepository
     func rowCount(inTables tables: [String], database: Database) async -> [String: Int] {
-        return await count(tables: tables, on: database)
+        return await storage.count(tables: tables, on: database)
     }
 }

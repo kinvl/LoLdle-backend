@@ -18,7 +18,7 @@ final class StatisticsControllerTests: XCTestCase {
                                   Statistic.Public(challengeType: ChallengeType.splash.rawValue, completions: 3)]
         let app = Application(.testing)
         defer { app.shutdown() }
-        try MainApplication().configure(app)
+        try bootstrap(app)
         try? DatabaseHelper.setupDefaultTestTables(inDatabase: app.db)
         
         // When:
