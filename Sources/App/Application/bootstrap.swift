@@ -7,3 +7,4 @@ public func bootstrap(_ app: Application) throws {
     try cron(app)
     try routes(app)
 }
+

@@ -19,7 +19,8 @@ class Assembler {
             ChampionChallengeControllerAssembly(),
             DataControllerAssembly(),
             DatasetAssembly(),
-            StatisticsControllerAssembly()
+            StatisticsControllerAssembly(),
+            AuthControllerAssembly()
         ])
     }()
     

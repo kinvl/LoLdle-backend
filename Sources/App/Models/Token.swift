@@ -27,11 +27,36 @@ final class Token: Model, Content {
         self.value = value
         self.$player.id = playerID
     }
+    
+    final class Public {
+        let token: String
+        
+        init(token: String) {
+            self.token = token
+        }
+    }
 }
+
+extension Token.Public: Content {}
 
 extension Token {
     static func generate(for player: Player) throws -> Token {
         let random = [UInt8].random(count: 16).base64
         return try Token(value: random, playerID: player.requireID())
+    }
+    
+    func mapToPublic() -> Token.Public {
+        Token.Public(token: self.value)
+    }
+}
+
+extension Token: ModelTokenAuthenticatable {
+    typealias User = Player
+    
+    static var valueKey = \Token.$value
+    static var userKey = \Token.$player
+    
+    var isValid: Bool {
+        true
     }
 }

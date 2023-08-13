@@ -10,6 +10,14 @@ import Swinject
 
 extension Application {
     var resolver: Resolver {
-        App.Assembler.init(application: self).assembler.resolver
+        if storage[ResolverKey.self] == nil {
+            storage[ResolverKey.self] = App.Assembler.init(application: self).assembler.resolver
+        }
+        
+        return storage[ResolverKey.self]!
     }
+}
+
+private struct ResolverKey: StorageKey {
+    typealias Value = Resolver
 }

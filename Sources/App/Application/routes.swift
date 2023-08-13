@@ -6,7 +6,8 @@ func routes(_ app: Application) throws {
     var routesCollections: [RouteCollection] {[
         app.resolver.resolve(ChallengeController.self)!,
         app.resolver.resolve(DataController.self)!,
-        app.resolver.resolve(StatisticsController.self)!
+        app.resolver.resolve(StatisticsController.self)!,
+        app.resolver.resolve(AuthController.self)!
     ]}
     
     try routesCollections.forEach { collection in
